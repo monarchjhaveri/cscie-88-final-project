@@ -1,0 +1,6 @@
+{
+  "ignore": ["public/dist"],
+  "events": {
+    "exit": "cd public && npm run build"
+  }
+}
