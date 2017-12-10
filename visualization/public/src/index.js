@@ -1,5 +1,17 @@
-const jQuery = require('jquery');
-const d3 = require('d3');
+const PackageComponent = require('./components/PackageComponent');
+const PackageCollection = require('./collections/PackageCollection');
 
-window.$ = window.jQuery = jQuery;
-window.d3 = d3;
+window.Backbone = require('backbone');
+window.d3 = require('d3');
+window.$ = window.jQuery = require('jquery');
+
+// const css = require('./styles/index.scss');
+import './styles/index.scss';
+
+const collection = new PackageCollection();
+collection.fetch();
+
+const view = new PackageComponent({
+  el: "#out",
+  collection: collection
+});

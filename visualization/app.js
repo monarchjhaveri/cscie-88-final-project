@@ -19,9 +19,25 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+
+
+
+const PackageService = require('./services/PackageService');
+app.use('/packages', function(req, res, next) {
+  const packageService = new PackageService();
+  const packages = packageService.find(req.query.query);
+  res.json(packages);
+});
+
 app.use('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
+
+
+
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
