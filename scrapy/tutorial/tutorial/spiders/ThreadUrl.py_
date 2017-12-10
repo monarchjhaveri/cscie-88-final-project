@@ -1,0 +1,38 @@
+#!/usr:/bin/env python
+import queue
+import threading
+from twisted.internet import reactor
+from scrapy.crawler import CrawlerProcess
+#import urllib2
+#import time
+import sys
+sys.path.insert(0, '/Users/labuser/Desktop/tutorial/tutorial/spiders')
+import StackSpider
+
+hosts = ["https://www.npmjs.com/package/browserify", "http://www.npmjs.com/package/grunt-cli", "http://www.npmjs.com/package/bower",
+"http://www.npmjs.com/package/gulp", "http://www.npmjs.com/package/grunt", "http://www.npmjs.com/package/express", 
+"http://www.npmjs.com/package/npm", "http://www.npmjs.com/package/cordova", "http://www.npmjs.com/package/forever"]
+
+queue = queue.Queue()
+
+class ThreadUrl(threading.Thread):
+  """Threaded Url Grab"""
+  def __init__(self, host):
+    threading.Thread.__init__(self)
+    self.host = host
+
+  def run(self):
+#    while True:
+      #grabs host from queue
+#      host = self.queue.get()
+
+      #grabs urls of hosts and prints first 1024 bytes of page
+#     url = urllib2.urlopen(host)
+#     print url.read(1024)
+      runner = CrawlerProcess()
+      runner.crawl(StackSpider.StackSpider(self.host))
+#      runner.start()
+#      reactor.run()
+      #signals to queue job is done
+#      self.queue.task_done()
+
