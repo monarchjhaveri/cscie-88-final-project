@@ -15,6 +15,22 @@ services:
     networks: 
       - backend
     command: "npm start"
+  neo4j-syncer:
+    image: "node:8.9.3"
+    user: "node"
+    working_dir: /home/node/app
+    environment:
+      - NODE_ENV=development
+      - PORT=3001
+    ports:
+      - 3001:3001
+    volumes:
+      - ./neo4j-syncer:/home/node/app
+    networks: 
+      - backend
+    command: "npm start"
+    depends_on: 
+      - kafka
   flume:
     image: probablyfine/flume
     volumes:
@@ -26,6 +42,8 @@ services:
     networks:
       - backend
     links:
+      - kafka
+    depends_on:
       - kafka
   kafka:
     image: spotify/kafka
@@ -40,6 +58,15 @@ services:
     environment:
       - ADVERTISED_HOST=172.17.0.1
       - ADVERTISED_PORT=9092
+  neo4j:
+    image: neo4j:3.3.1
+    ports:
+      - 7687:7687
+      - 7474:7474
+    volumes:
+      - ./neo4j-data:/data
+    networks: 
+      - backend
   # zookeeper:
   #   image: wurstmeister/zookeeper
   #   ports:
