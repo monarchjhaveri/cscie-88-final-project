@@ -1,0 +1,21 @@
+@startuml
+[ChangesFetcher]
+[FlumeChanges]
+[KafkaChanges]
+[SparkChanges]
+[Neo4J]
+[NodeJS]
+[Browser]
+
+ChangesFetcher -r-> ChangesAPI
+ChangesAPI -> ChangesFetcher
+ChangesFetcher -d-> FlumeChanges
+FlumeChanges -d->KafkaChanges
+KafkaChanges -d-> SparkChanges
+SparkChanges -r-> DetailsAPI
+DetailsAPI -> SparkChanges
+Neo4J <-u->SparkChanges
+
+Neo4J -d-> NodeJS
+NodeJS -d-> Browser
+@enduml
