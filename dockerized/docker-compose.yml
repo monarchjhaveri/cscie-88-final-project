@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+  changes-fetcher:
+    image: "node:8.9.3"
+    user: "node"
+    working_dir: /home/node/app
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+    ports:
+      - 3000:3000
+    volumes:
+      - ./changes-fetcher:/home/node/app
+    networks: 
+      - backend
+    command: "npm start"
+  flume:
+    image: probablyfine/flume
+    volumes:
+      - ./flume:/usr/local/etc/flume
+      - ./changes-fetcher/output:/usr/local/etc/changes-fetcher/output
+    environment:
+      - FLUME_AGENT_NAME=a1
+      - FLUME_CONF_FILE=/usr/local/etc/flume/config/flume.conf
+    networks:
+      - backend
+
+networks:
+  backend:

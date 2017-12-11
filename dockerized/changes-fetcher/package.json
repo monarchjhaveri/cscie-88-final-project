@@ -5,5 +5,8 @@
   "license": "MIT",
   "dependencies": {
     "request": "^2.83.0"
+  },
+  "scripts": {
+    "start": "node query.js"
   }
 }

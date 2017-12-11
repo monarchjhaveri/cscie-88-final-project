@@ -3,28 +3,30 @@ const request = require('request');
 const path = require('path');
 const { performance } = require('perf_hooks');
 
-const fileName = path.join(__dirname, 'output.json');
 const url = 'https://replicate.npmjs.com/_changes';
+const interval = 30 * 60 * 1000; // 30 minutes
 
-performance.mark('queryStart');
-const req = request(url, function(err, httpResponse, body) {
-  performance.mark('queryStop');
-  performance.measure('QueryTime', 'queryStart', 'queryStop');
-  const measure = performance.getEntriesByName('QueryTime')[0];
-  console.log(`Query took ${measure.duration} milliseconds`);
+function sync() {
+  console.log("Starting sync...");
+  const startTime = Date.now();
+  const req = request(url, function(err, httpResponse, body) {
+    console.log(`Query took ${Date.now() - startTime} milliseconds`);
 
-  if (err) {
-    console.log(err);
-  } else {
-    const json = JSON.parse(body);
-    writeCsvFile(json);
-  }
-});
+    if (err) {
+      console.log(err);
+    } else {
+      const json = JSON.parse(body);
+      writeCsvFile(json);
+    }
+
+    console.log("Sleeping for " + interval + " milliseconds." );
+  });
+}
 
 function writeCsvFile(json) {
-  performance.mark('writeCsvFileStart');
-  const timestamp = Date.now();
-  const fileName = `output/output-${timestamp}.csv`;
+  console.log("Starting writeCsvFile...");
+  const startTime = Date.now();
+  const fileName = `output/output-${startTime}.csv`;
 
   const csv = json.results.map(result => {
     return `${result.id} ${result.changes[0].rev}`;
@@ -32,10 +34,8 @@ function writeCsvFile(json) {
 
   fs.writeFileSync(fileName, csv);
 
-  performance.mark('writeCsvFileStop');
-  performance.measure('WriteCsvFileTime', 'writeCsvFileStart', 'writeCsvFileStop');
-  const measure = performance.getEntriesByName('WriteCsvFileTime')[0];
-  console.log(`writeCsvFile tool ${measure.duration} milliseconds`);
+  console.log(`writeCsvFile took ${Date.now() - startTime} milliseconds`);
 }
 
-// req.pipe(writeStream);
+sync();
+setInterval(sync, interval);
