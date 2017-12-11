@@ -25,6 +25,38 @@ services:
       - FLUME_CONF_FILE=/usr/local/etc/flume/config/flume.conf
     networks:
       - backend
+    links:
+      - kafka
+  kafka:
+    image: spotify/kafka
+    ports:
+      - 2181:2181
+      - 9092:9092
+    expose:
+      - "2181"
+      - "9092"
+    networks:
+      - backend
+    environment:
+      - ADVERTISED_HOST=172.17.0.1
+      - ADVERTISED_PORT=9092
+  # zookeeper:
+  #   image: wurstmeister/zookeeper
+  #   ports:
+  #     - 2181:2181
+  # kafka:
+  #   image: wurstmeister/kafka
+  #   ports:
+  #     - 9092:9092
+  #   networks:
+  #     - backend
+  #   depends_on:
+  #     - zookeeper
+  #   environment:
+  #     - HOSTNAME_COMMAND=route -n | awk '/UG[ \t]/{print $$2}'
+  #     - KAFKA_CREATE_TOPICS=changes
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock
 
 networks:
   backend:
