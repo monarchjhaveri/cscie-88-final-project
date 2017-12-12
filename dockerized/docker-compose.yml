@@ -14,7 +14,8 @@ services:
       - ./changes-fetcher:/home/node/app
     networks: 
       - backend
-    command: "npm start"
+    # command: "npm start"
+    command: "npm run mock"
   neo4j-syncer:
     image: "node:8.9.3"
     user: "node"
@@ -31,6 +32,10 @@ services:
     command: "npm start"
     depends_on: 
       - kafka
+      - neo4j
+    links:
+      - kafka
+      - neo4j
   flume:
     image: probablyfine/flume
     volumes:

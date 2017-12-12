@@ -4,9 +4,11 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "fs-extra": "^5.0.0",
     "request": "^2.83.0"
   },
   "scripts": {
-    "start": "node query.js"
+    "start": "node query.js",
+    "mock": "node mock.js"
   }
 }
