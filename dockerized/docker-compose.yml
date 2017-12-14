@@ -14,7 +14,7 @@ services:
       - ./changes-fetcher:/home/node/app
     networks: 
       - backend
-    command: "npm start"
+    command: "./start"
     # command: "npm run mock"
   db-syncer:
     image: "node:8.9.3"
@@ -29,7 +29,7 @@ services:
       - ./db-syncer:/home/node/app
     networks: 
       - backend
-    command: "npm start"
+    command: "./start"
     depends_on: 
       - kafka
       - mongo
@@ -86,7 +86,7 @@ services:
       - ./visualization:/home/node/app
     networks: 
       - backend
-    command: "npm start"
+    command: "./start"
     depends_on: 
       - mongo
     links:
