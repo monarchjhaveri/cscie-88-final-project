@@ -1,0 +1,10 @@
+extends layout
+include ./mixins/search.jade
+
+block content
+  h1 Package Search
+  p Welcome to Package Search
+  div.left
+    +search(searchParam)
+  div.right
+    p= json
