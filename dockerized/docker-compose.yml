@@ -16,7 +16,7 @@ services:
       - backend
     # command: "npm start"
     command: "npm run mock"
-  neo4j-syncer:
+  db-syncer:
     image: "node:8.9.3"
     user: "node"
     working_dir: /home/node/app
@@ -26,16 +26,16 @@ services:
     ports:
       - 3001:3001
     volumes:
-      - ./neo4j-syncer:/home/node/app
+      - ./db-syncer:/home/node/app
     networks: 
       - backend
     command: "npm start"
     depends_on: 
       - kafka
-      - neo4j
+      - mongo
     links:
       - kafka
-      - neo4j
+      - mongo
   flume:
     image: probablyfine/flume
     volumes:
@@ -63,15 +63,23 @@ services:
     environment:
       - ADVERTISED_HOST=172.17.0.1
       - ADVERTISED_PORT=9092
-  neo4j:
-    image: neo4j:3.3.1
-    ports:
-      - 7687:7687
-      - 7474:7474
+  mongo:
+    image: mongo
+    ports: 
+      - 27017:27017
     volumes:
-      - ./neo4j-data:/data
-    networks: 
-      - backend
+      - ./mongo/data:/data/db
+
+
+  # neo4j:
+  #   image: neo4j:3.3.1
+  #   ports:
+  #     - 7687:7687
+  #     - 7474:7474
+  #   volumes:
+  #     - ./neo4j-data:/data
+  #   networks: 
+  #     - backend
   # zookeeper:
   #   image: wurstmeister/zookeeper
   #   ports:
