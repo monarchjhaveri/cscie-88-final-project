@@ -4,7 +4,7 @@ const path = require('path');
 const { performance } = require('perf_hooks');
 
 const url = 'https://replicate.npmjs.com/_changes';
-const interval = 30 * 60 * 1000; // 30 minutes
+const interval = 60 * 60 * 1000; // 60 minutes
 
 function sync() {
   console.log("Starting sync...");
@@ -37,5 +37,6 @@ function writeCsvFile(json) {
   console.log(`writeCsvFile took ${Date.now() - startTime} milliseconds`);
 }
 
-sync();
+setTimeout(sync, 15 * 1000); //  30 second wait for the rest of the containers to start
+// sync();
 setInterval(sync, interval);

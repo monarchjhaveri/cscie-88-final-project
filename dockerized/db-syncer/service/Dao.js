@@ -1,23 +1,24 @@
+const { retry } = require('async');
 const MongoClient = require("mongodb").MongoClient;
 
-const URL = "mongodb://localhost:27017";
+const URL = "mongodb://mongo:27017";
 const DATABASE = "packages";
 const COLLECTION = "packages";
 
 class Dao {
   constructor() {
     MongoClient.connect(URL, function(err, client) {
-      if (err) console.error("FAILED TO ENSURE UNIQUE NAME!");
+      if (err) return console.error(err);
 
       const db = client.db(DATABASE);
       const collection = db.collection(COLLECTION);
       collection.createIndex( { "name": 1 }, { unique: true } );
-
       client.close();
-    });
+    });  
   }
 
   findPackages(names, callback) {
+    console.log("FINDPACKAGES CALLED!");
     MongoClient.connect(URL, function(err, client) {
       if (err) return callback(err);
       
@@ -34,6 +35,7 @@ class Dao {
   }
 
   upsertPackages(packages, callback) {
+    console.log("UPSERTED CALLED!");
     MongoClient.connect(URL, function(err, client) {
       if (err) return callback(err);
 

@@ -7,7 +7,7 @@ class KafkaConsumerService {
       autoCommit: true,
       fetchMaxWaitMs: 1000,
       fetchMaxBytes: 1024 * 1024,
-      kafkaHost: '172.17.0.1:9092',
+      kafkaHost: 'kafka:9092',
       protocol: ['roundrobin']
     };
 

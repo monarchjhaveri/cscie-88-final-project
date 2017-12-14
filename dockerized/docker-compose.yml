@@ -14,8 +14,8 @@ services:
       - ./changes-fetcher:/home/node/app
     networks: 
       - backend
-    # command: "npm start"
-    command: "npm run mock"
+    command: "npm start"
+    # command: "npm run mock"
   db-syncer:
     image: "node:8.9.3"
     user: "node"
@@ -67,8 +67,12 @@ services:
     image: mongo
     ports: 
       - 27017:27017
+    expose:
+      - "27017"
     volumes:
-      - ./mongo/data:/data/db
+      - .mongo-volume:/data/db
+    networks:
+      - backend
 
 
   # neo4j:
@@ -100,3 +104,6 @@ services:
 
 networks:
   backend:
+
+volumes:
+  mongo-volume:
