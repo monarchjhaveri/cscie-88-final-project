@@ -1,5 +1,5 @@
 body {
-  padding: 50px;
+  padding: 50px 0 0 0;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -14,4 +14,12 @@ a {
 
 .right {
   margin-left: 20px;
+}
+
+.left {
+  width: 200px;
+}
+
+.right {
+  width: calc(100% - 300px);
 }

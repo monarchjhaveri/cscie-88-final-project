@@ -17,6 +17,7 @@ mixin search(searchParam)
       searchForm.addEventListener('submit', function(e) {
         e.preventDefault();
 
+        searchOutput.innerHTML = '';
         const val = searchBar.value;
         const searchParam = encodeURIComponent(val);
         fetch('/api/search?searchParam=' + searchParam)

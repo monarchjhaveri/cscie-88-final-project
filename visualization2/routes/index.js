@@ -9,15 +9,32 @@ router.get('/', function(req, res, next) {
 
 router.get('/package/:name', function(req, res, next) {
   const searchService = new SearchService();
-  searchService.fetch(req.params.name, (err, docs) => {
+  searchService.fetch(req.params.name, (err, pkg) => {
     if (err) throw (err);
+    const latestVersion = getLatestVersion(pkg);
+    const dependencies = latestVersion.dependencies || [];
+    const bugs = latestVersion.bugs || [];
+    const author = latestVersion.author || {};
+    const keywords = latestVersion.keywords ? latestVersion.keywords.join(", ") : "";
+
+
     res.render('package', 
       {
         searchParam: req.query.searchParam, 
-        json: JSON.stringify(docs)
+        pkg: pkg,
+        latestVersion: latestVersion,
+        dependencies: dependencies,
+        bugs, author, keywords
       }
     );
   })
 })
+
+function getLatestVersion(pkg) {
+  const versions = pkg.versions;
+  const keys = Object.keys(versions);
+  const lastKey = keys[keys.length - 1];
+  return versions[lastKey];
+}
 
 module.exports = router;

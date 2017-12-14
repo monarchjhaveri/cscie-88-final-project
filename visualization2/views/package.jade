@@ -7,4 +7,21 @@ block content
   div.left
     +search(searchParam)
   div.right
-    p= json
+    h1= latestVersion.name
+    p Description: 
+      span= latestVersion.description
+    p Author: 
+      a(href=author.email):= author.name
+    p Homepage: 
+      a(href=latestVersion.homepage) Link
+    p Bugs: 
+      a(href=bugs.url) Link
+    p Keywords: 
+      span= keywords = keywords
+    p License:
+      span= latestVersion.license
+    p Dependencies:
+    for key, val in dependencies
+      a(href="/packages/"+val)= val
+    p= JSON.stringify(pkg)
+    p= JSON.stringify(latestVersion)
