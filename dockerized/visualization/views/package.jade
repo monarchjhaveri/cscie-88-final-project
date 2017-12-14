@@ -21,7 +21,9 @@ block content
     p License:
       span= latestVersion.license
     p Dependencies:
-    for key, val in dependencies
-      a(href="/packages/"+val)= val
+      ul
+      for key, val in dependencies
+        li
+          a(href="/package/"+val)= val
     p= JSON.stringify(pkg)
     p= JSON.stringify(latestVersion)
