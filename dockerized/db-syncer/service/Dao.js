@@ -13,6 +13,8 @@ class Dao {
       const db = client.db(DATABASE);
       const collection = db.collection(COLLECTION);
       collection.createIndex( { "name": 1 }, { unique: true } );
+      collection.createIndex({"name":"text"});
+      collection.createIndex({"name":"description"});
       client.close();
     });  
   }
