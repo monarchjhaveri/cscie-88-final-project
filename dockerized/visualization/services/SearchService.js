@@ -1,5 +1,5 @@
 const MongoClient = require("mongodb").MongoClient;
-const URL = "mongodb://localhost:27017";
+const URL = "mongodb://mongo:27017";
 const DATABASE = "packages";
 const COLLECTION = "packages";
 

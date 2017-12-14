@@ -73,7 +73,24 @@ services:
       - .mongo-volume:/data/db
     networks:
       - backend
-
+  visualization:
+    image: "node:8.9.3"
+    user: "node"
+    working_dir: /home/node/app
+    environment:
+      - NODE_ENV=development
+      - PORT=8080
+    ports:
+      - 8080:8080
+    volumes:
+      - ./visualization:/home/node/app
+    networks: 
+      - backend
+    command: "npm start"
+    depends_on: 
+      - mongo
+    links:
+      - mongo
 
   # neo4j:
   #   image: neo4j:3.3.1

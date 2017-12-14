@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "PORT=1337 nodemon ./bin/www"
+    "start": "node ./bin/www",
+    "develop": "PORT=1337 nodemon ./bin/www"
   },
   "dependencies": {
     "body-parser": "~1.18.2",
