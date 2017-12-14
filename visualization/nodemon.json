@@ -1,6 +1,0 @@
-{
-  "ignore": ["public"],
-  "events": {
-    "exit": "cd public && npm run build"
-  }
-}

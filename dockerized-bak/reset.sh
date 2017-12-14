@@ -1,1 +1,0 @@
-docker-compose stop && docker-compose rm -f && docker volume rm dockerized_couchdb-data
